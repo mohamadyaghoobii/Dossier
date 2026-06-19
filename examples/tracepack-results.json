@@ -1,0 +1,45 @@
+{
+  "project": "Payments Platform",
+  "environment": "production",
+  "module": "Tracepack",
+  "findings": [
+    {
+      "title": "High-severity dependency vulnerability",
+      "severity": "high",
+      "status": "fail",
+      "category": "Dependencies",
+      "asset": "requirements.txt",
+      "description": "A transitive dependency has a known remote code execution advisory.",
+      "impact": "An attacker could trigger code execution through the vulnerable path.",
+      "remediation": "Upgrade the affected package to a patched version and rebuild the SBOM.",
+      "references": ["https://osv.dev/"],
+      "confidence": 0.9
+    },
+    {
+      "title": "Token-like value committed to repository",
+      "severity": "high",
+      "status": "fail",
+      "category": "Secrets",
+      "asset": "config/.env.sample",
+      "description": "A value matching a token pattern is present in a tracked file.",
+      "impact": "Committed secrets can leak through clones, forks, and build logs.",
+      "remediation": "Remove the value, rotate it, and move secrets to a managed store.",
+      "evidence": "EXAMPLE_TOKEN=placeholder-demo-value-not-real"
+    },
+    {
+      "title": "Outdated direct dependency",
+      "severity": "medium",
+      "status": "warn",
+      "category": "Dependencies",
+      "asset": "package.json",
+      "remediation": "Update the dependency to the current supported release."
+    },
+    {
+      "title": "SBOM generated for build",
+      "severity": "info",
+      "status": "pass",
+      "category": "Inventory",
+      "asset": "build/sbom.json"
+    }
+  ]
+}

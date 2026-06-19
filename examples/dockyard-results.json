@@ -1,0 +1,43 @@
+{
+  "project": "Payments Platform",
+  "environment": "production",
+  "module": "Dockyard",
+  "results": [
+    {
+      "rule": "Image runs as root user",
+      "level": "high",
+      "result": "fail",
+      "category": "User & Privileges",
+      "target": "services/api/Dockerfile",
+      "line": 18,
+      "detail": "No USER instruction is defined before the runtime command.",
+      "impact": "The process runs as root, increasing the impact of a container escape.",
+      "fix": "Create a dedicated user and add a USER instruction before CMD.",
+      "confidence": 0.95
+    },
+    {
+      "rule": "Base image is not pinned",
+      "level": "medium",
+      "result": "warn",
+      "category": "Supply Chain",
+      "target": "services/api/Dockerfile",
+      "detail": "The base image uses a floating tag rather than a digest.",
+      "fix": "Pin the base image by digest to ensure reproducible builds."
+    },
+    {
+      "rule": "apt cache not cleaned",
+      "level": "low",
+      "result": "warn",
+      "category": "Image Hygiene",
+      "target": "services/api/Dockerfile",
+      "fix": "Remove the apt cache in the same layer to reduce image size."
+    },
+    {
+      "rule": "Healthcheck defined",
+      "level": "info",
+      "result": "pass",
+      "category": "Reliability",
+      "target": "services/api/Dockerfile"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "project": "Payments Platform",
+  "organization": "MetaSec",
+  "environment": "production",
+  "findings": [
+    {
+      "title": "Public administrative port exposed",
+      "severity": "critical",
+      "status": "fail",
+      "category": "Network Exposure",
+      "source": "Cloudline",
+      "asset": "aws_security_group.web_admin",
+      "file": "infra/network.tf",
+      "line": 22,
+      "description": "SSH is open to 0.0.0.0/0 on a production-facing security group.",
+      "impact": "The management plane is reachable from the internet.",
+      "remediation": "Restrict administrative access to a VPN, bastion, or approved ranges.",
+      "evidence": "ingress { from_port = 22, to_port = 22, cidr_blocks = [\"0.0.0.0/0\"] }",
+      "references": ["https://owasp.org/www-project-top-ten/"],
+      "confidence": 0.97
+    },
+    {
+      "title": "Pipeline token has broad write permissions",
+      "severity": "high",
+      "status": "fail",
+      "category": "Permissions",
+      "source": "Gatehouse",
+      "asset": ".github/workflows/deploy.yml",
+      "description": "The workflow grants write permissions broadly instead of per job.",
+      "impact": "A compromised step can modify code, releases, or artifacts.",
+      "remediation": "Set least-privilege permissions per job."
+    },
+    {
+      "title": "Container runs without a non-root user",
+      "severity": "medium",
+      "status": "warn",
+      "category": "User & Privileges",
+      "source": "Dockyard",
+      "asset": "services/api/Dockerfile",
+      "remediation": "Create a dedicated user and switch to it before runtime."
+    },
+    {
+      "title": "Missing readiness probe",
+      "severity": "low",
+      "status": "warn",
+      "category": "Reliability",
+      "source": "Podscope",
+      "asset": "Deployment/api",
+      "remediation": "Add a readinessProbe checking a health endpoint."
+    },
+    {
+      "title": "TLS enforced on load balancer",
+      "severity": "info",
+      "status": "pass",
+      "category": "Encryption",
+      "source": "Cloudline",
+      "asset": "alb-prod-payments"
+    }
+  ]
+}

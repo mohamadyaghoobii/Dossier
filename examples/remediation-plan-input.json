@@ -1,0 +1,61 @@
+{
+  "project": "Payments Platform",
+  "organization": "MetaSec",
+  "environment": "production",
+  "findings": [
+    {
+      "title": "Public database endpoint",
+      "severity": "critical",
+      "status": "fail",
+      "category": "Database Exposure",
+      "source": "Cloudline",
+      "asset": "rds-prod-payments",
+      "remediation": "Disable public access and move connectivity to private subnets."
+    },
+    {
+      "title": "Hardcoded token in environment file",
+      "severity": "high",
+      "status": "fail",
+      "category": "Secrets",
+      "source": "Tracepack",
+      "asset": "config/.env.sample",
+      "remediation": "Rotate the value and move it to a managed secret store."
+    },
+    {
+      "title": "Workflow grants broad write permissions",
+      "severity": "high",
+      "status": "fail",
+      "category": "Permissions",
+      "source": "Gatehouse",
+      "asset": ".github/workflows/deploy.yml",
+      "remediation": "Set least-privilege permissions per job."
+    },
+    {
+      "title": "S3 bucket versioning disabled",
+      "severity": "medium",
+      "status": "warn",
+      "category": "Storage",
+      "source": "Stacklint",
+      "asset": "aws_s3_bucket.assets",
+      "remediation": "Enable bucket versioning and lifecycle rules."
+    },
+    {
+      "title": "Missing resource limits",
+      "severity": "medium",
+      "status": "warn",
+      "category": "Reliability",
+      "source": "Podscope",
+      "asset": "Deployment/worker",
+      "remediation": "Define resource requests and limits per container."
+    },
+    {
+      "title": "Resource tags missing owner",
+      "severity": "low",
+      "status": "warn",
+      "category": "Governance",
+      "source": "Stacklint",
+      "asset": "aws_instance.worker",
+      "remediation": "Add an owner tag for cost and ownership tracking."
+    }
+  ]
+}

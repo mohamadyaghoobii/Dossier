@@ -1,0 +1,44 @@
+{
+  "project": "Payments Platform",
+  "environment": "production",
+  "module": "Gatehouse",
+  "findings": [
+    {
+      "title": "Workflow grants broad write permissions",
+      "severity": "high",
+      "status": "fail",
+      "category": "Permissions",
+      "resource": ".github/workflows/deploy.yml",
+      "description": "The workflow uses permissions: write-all instead of least-privilege scopes.",
+      "impact": "A compromised step can modify code, releases, or deployment artifacts.",
+      "remediation": "Set permissions at workflow and job level and grant only required scopes.",
+      "references": ["https://docs.github.com/actions/using-jobs/assigning-permissions-to-jobs"]
+    },
+    {
+      "title": "Third-party action pinned by tag",
+      "severity": "medium",
+      "status": "warn",
+      "category": "Supply Chain",
+      "resource": ".github/workflows/ci.yml",
+      "description": "An external action is referenced by a mutable tag rather than a commit SHA.",
+      "remediation": "Pin third-party actions to a full-length commit SHA."
+    },
+    {
+      "title": "No manual approval before production deploy",
+      "severity": "high",
+      "status": "fail",
+      "category": "Deployment Safety",
+      "resource": "deploy-production",
+      "description": "Production deployments do not require a protected environment or reviewer.",
+      "impact": "Risky changes can reach production without human review.",
+      "remediation": "Require a protected environment with required reviewers for production."
+    },
+    {
+      "title": "Secrets scanned in pipeline",
+      "severity": "info",
+      "status": "pass",
+      "category": "Secrets",
+      "resource": ".github/workflows/ci.yml"
+    }
+  ]
+}

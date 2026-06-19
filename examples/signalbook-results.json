@@ -1,0 +1,40 @@
+{
+  "project": "Payments Platform",
+  "environment": "production",
+  "module": "Signalbook",
+  "findings": [
+    {
+      "title": "No alerting on error budget burn",
+      "severity": "high",
+      "status": "fail",
+      "category": "Observability",
+      "asset": "payments-api",
+      "description": "There is no alert tied to SLO error budget burn rate.",
+      "impact": "Reliability regressions can go unnoticed until customers report them.",
+      "remediation": "Add multi-window burn-rate alerts mapped to the service SLO."
+    },
+    {
+      "title": "Runbook missing for primary service",
+      "severity": "medium",
+      "status": "warn",
+      "category": "Incident Readiness",
+      "asset": "payments-api",
+      "remediation": "Author a runbook covering common failure modes and recovery steps."
+    },
+    {
+      "title": "No incident owner defined",
+      "severity": "medium",
+      "status": "warn",
+      "category": "Operational Readiness",
+      "asset": "service-profile.yaml",
+      "remediation": "Assign a primary owner and an escalation path."
+    },
+    {
+      "title": "Dashboards published for service",
+      "severity": "info",
+      "status": "pass",
+      "category": "Observability",
+      "asset": "payments-api"
+    }
+  ]
+}

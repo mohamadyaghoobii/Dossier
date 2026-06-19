@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Inter, Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a1322"/><stop offset="1" stop-color="#070d18"/></linearGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5ec8ff"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5ec8ff"/></marker>
+  </defs>
+  <rect width="1200" height="560" fill="url(#bg)"/>
+  <text x="40" y="52" fill="#e8eef9" font-size="22" font-weight="700">Dossier architecture</text>
+  <text x="40" y="76" fill="#93a3bd" font-size="13">Consume findings, normalize, score, render, and export for platform ingestion.</text>
+
+  <!-- column 1: sources -->
+  <text x="60" y="120" fill="#64748b" font-size="11" letter-spacing="1">ANALYZER MODULES</text>
+  <g font-size="12" fill="#cfe3ff">
+    <rect x="40" y="132" width="200" height="34" rx="9" fill="#0f1a2e" stroke="#1f2c45"/><text x="56" y="154">Podscope · Dockyard</text>
+    <rect x="40" y="174" width="200" height="34" rx="9" fill="#0f1a2e" stroke="#1f2c45"/><text x="56" y="196">Gatehouse · Stacklint</text>
+    <rect x="40" y="216" width="200" height="34" rx="9" fill="#0f1a2e" stroke="#1f2c45"/><text x="56" y="238">Tracepack · Signalbook</text>
+    <rect x="40" y="258" width="200" height="34" rx="9" fill="#0f1a2e" stroke="#1f2c45"/><text x="56" y="280">Cloudline · generic JSON</text>
+  </g>
+
+  <!-- column 2: API pipeline -->
+  <rect x="300" y="110" width="320" height="360" rx="16" fill="#0c1628" stroke="#243149"/>
+  <text x="320" y="138" fill="#5ec8ff" font-size="12" font-weight="700">FastAPI · Dossier engine</text>
+  <g font-size="12" fill="#e8eef9">
+    <rect x="320" y="152" width="280" height="44" rx="10" fill="#0f1a2e" stroke="#2d4d76"/><text x="338" y="172">Normalization</text><text x="338" y="188" fill="#93a3bd" font-size="10">field aliasing · severity/status</text>
+    <rect x="320" y="204" width="280" height="44" rx="10" fill="#0f1a2e" stroke="#2d4d76"/><text x="338" y="224">Prioritization</text><text x="338" y="240" fill="#93a3bd" font-size="10">exposure · secrets · IAM · prod</text>
+    <rect x="320" y="256" width="280" height="44" rx="10" fill="#0f1a2e" stroke="#2d4d76"/><text x="338" y="276">Scoring &amp; aggregation</text><text x="338" y="292" fill="#93a3bd" font-size="10">explainable score · grade · counts</text>
+    <rect x="320" y="308" width="280" height="44" rx="10" fill="#0f1a2e" stroke="#2d4d76"/><text x="338" y="328">Template engine</text><text x="338" y="344" fill="#93a3bd" font-size="10">executive · technical · remediation…</text>
+    <rect x="320" y="360" width="280" height="44" rx="10" fill="#0f1a2e" stroke="#2d4d76"/><text x="338" y="380">Renderers</text><text x="338" y="396" fill="#93a3bd" font-size="10">Markdown · self-contained HTML</text>
+    <rect x="320" y="412" width="280" height="40" rx="10" fill="#0c1424" stroke="#1f2c45"/><text x="338" y="437" fill="#a78bfa">AI layer (optional, off by default)</text>
+  </g>
+
+  <!-- column 3: outputs -->
+  <text x="700" y="120" fill="#64748b" font-size="11" letter-spacing="1">OUTPUTS</text>
+  <g font-size="12" fill="#cfe3ff">
+    <rect x="680" y="132" width="220" height="40" rx="9" fill="#0f1a2e" stroke="#1f2c45"/><text x="696" y="157">Markdown report</text>
+    <rect x="680" y="180" width="220" height="40" rx="9" fill="#0f1a2e" stroke="#1f2c45"/><text x="696" y="205">HTML report (print-ready)</text>
+    <rect x="680" y="228" width="220" height="40" rx="9" fill="#0f1a2e" stroke="#1f2c45"/><text x="696" y="253">Score + aggregation JSON</text>
+    <rect x="680" y="276" width="220" height="40" rx="9" fill="#0f1a2e" stroke="#1f2c45"/><text x="696" y="301">Normalized findings</text>
+  </g>
+
+  <!-- column 4: consumers -->
+  <text x="940" y="120" fill="#64748b" font-size="11" letter-spacing="1">CONSUMERS</text>
+  <g font-size="12" fill="#cfe3ff">
+    <rect x="940" y="132" width="220" height="40" rx="9" fill="#102544" stroke="#2d4d76"/><text x="956" y="157">Next.js workbench</text>
+    <rect x="940" y="180" width="220" height="40" rx="9" fill="#102544" stroke="#2d4d76"/><text x="956" y="205">OpsDeck platform</text>
+    <rect x="940" y="228" width="220" height="40" rx="9" fill="#102544" stroke="#2d4d76"/><text x="956" y="253">Wikis · PRs · tickets</text>
+    <rect x="940" y="276" width="220" height="40" rx="9" fill="#0c1424" stroke="#1f2c45"/><text x="956" y="301" fill="#64748b">PDF / DOCX (roadmap)</text>
+  </g>
+
+  <line x1="240" y1="212" x2="298" y2="212" stroke="#5ec8ff" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="620" y1="220" x2="678" y2="200" stroke="#5ec8ff" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="900" y1="200" x2="938" y2="200" stroke="#5ec8ff" stroke-width="2" marker-end="url(#arr)"/>
+</svg>

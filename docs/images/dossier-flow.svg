@@ -1,19 +1,37 @@
-<svg width="1280" height="520" viewBox="0 0 1280 520" xmlns="http://www.w3.org/2000/svg">
-  <defs><linearGradient id="a" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
-  <rect width="1280" height="520" rx="30" fill="#0b1220"/>
-  <text x="70" y="82" fill="#f8fafc" font-family="Inter,Arial" font-size="34" font-weight="700">Dossier reporting flow</text>
-  <text x="70" y="116" fill="#94a3b8" font-family="Inter,Arial" font-size="17">Normalize findings, calculate risk, build sections, and export stakeholder-ready reports.</text>
-  <g font-family="Inter,Arial" font-size="18" font-weight="700">
-    <rect x="86" y="210" width="210" height="124" rx="22" fill="#111827" stroke="#26324a"/><text x="132" y="280" fill="#e5e7eb">Analyzer JSON</text>
-    <rect x="386" y="210" width="210" height="124" rx="22" fill="#111827" stroke="#26324a"/><text x="425" y="280" fill="#e5e7eb">Normalize</text>
-    <rect x="686" y="210" width="210" height="124" rx="22" fill="#111827" stroke="#26324a"/><text x="728" y="280" fill="#e5e7eb">Build report</text>
-    <rect x="986" y="210" width="210" height="124" rx="22" fill="#111827" stroke="#26324a"/><text x="1034" y="280" fill="#e5e7eb">Export</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 260" font-family="Inter, Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="acc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5ec8ff"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+    <marker id="arr" markerWidth="12" markerHeight="12" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#5ec8ff"/></marker>
+  </defs>
+  <rect width="1200" height="260" rx="20" fill="#070d18"/>
+  <text x="40" y="48" fill="#e8eef9" font-size="18" font-weight="700">Report generation flow</text>
+
+  <g font-size="13">
+    <rect x="40" y="92" width="170" height="86" rx="14" fill="#0f1a2e" stroke="#1f2c45"/>
+    <text x="125" y="130" fill="#e8eef9" text-anchor="middle" font-weight="600">Raw findings</text>
+    <text x="125" y="152" fill="#93a3bd" text-anchor="middle" font-size="11">module / mixed JSON</text>
+
+    <rect x="252" y="92" width="170" height="86" rx="14" fill="#0f1a2e" stroke="#1f2c45"/>
+    <text x="337" y="130" fill="#e8eef9" text-anchor="middle" font-weight="600">Normalize</text>
+    <text x="337" y="152" fill="#93a3bd" text-anchor="middle" font-size="11">stable schema</text>
+
+    <rect x="464" y="92" width="170" height="86" rx="14" fill="#0f1a2e" stroke="#1f2c45"/>
+    <text x="549" y="130" fill="#e8eef9" text-anchor="middle" font-weight="600">Prioritize + score</text>
+    <text x="549" y="152" fill="#93a3bd" text-anchor="middle" font-size="11">grade · top risks</text>
+
+    <rect x="676" y="92" width="170" height="86" rx="14" fill="#0f1a2e" stroke="#1f2c45"/>
+    <text x="761" y="130" fill="#e8eef9" text-anchor="middle" font-weight="600">Apply template</text>
+    <text x="761" y="152" fill="#93a3bd" text-anchor="middle" font-size="11">sections + filters</text>
+
+    <rect x="888" y="92" width="272" height="86" rx="14" fill="#102544" stroke="#2d4d76"/>
+    <text x="1024" y="130" fill="#eaf6ff" text-anchor="middle" font-weight="600">Render &amp; export</text>
+    <text x="1024" y="152" fill="#93a3bd" text-anchor="middle" font-size="11">Markdown · HTML · JSON → OpsDeck</text>
   </g>
-  <path d="M312 272 L366 272" stroke="url(#a)" stroke-width="8" stroke-linecap="round"/>
-  <path d="M612 272 L666 272" stroke="url(#a)" stroke-width="8" stroke-linecap="round"/>
-  <path d="M912 272 L966 272" stroke="url(#a)" stroke-width="8" stroke-linecap="round"/>
-  <text x="136" y="374" fill="#94a3b8" font-family="Inter,Arial" font-size="15">Podscope, Dockyard, Gatehouse, Stacklint, Tracepack, Cloudline</text>
-  <text x="429" y="374" fill="#94a3b8" font-family="Inter,Arial" font-size="15">Stable finding schema</text>
-  <text x="714" y="374" fill="#94a3b8" font-family="Inter,Arial" font-size="15">Executive + technical</text>
-  <text x="1016" y="374" fill="#94a3b8" font-family="Inter,Arial" font-size="15">Markdown + HTML</text>
+
+  <g stroke="url(#acc)" stroke-width="2" marker-end="url(#arr)">
+    <line x1="210" y1="135" x2="250" y2="135"/>
+    <line x1="422" y1="135" x2="462" y2="135"/>
+    <line x1="634" y1="135" x2="674" y2="135"/>
+    <line x1="846" y1="135" x2="886" y2="135"/>
+  </g>
 </svg>

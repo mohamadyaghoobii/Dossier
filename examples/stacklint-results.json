@@ -1,0 +1,45 @@
+{
+  "project": "Payments Platform",
+  "environment": "production",
+  "module": "Stacklint",
+  "issues": [
+    {
+      "name": "S3 bucket allows public access",
+      "risk": "critical",
+      "state": "fail",
+      "category": "Storage",
+      "resource": "aws_s3_bucket.public_assets",
+      "file": "infra/storage.tf",
+      "line": 12,
+      "description": "The bucket policy permits public read access.",
+      "impact": "Stored objects can be enumerated and downloaded from the internet.",
+      "recommendation": "Enable public access block and scope the bucket policy to known principals.",
+      "references": ["https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html"]
+    },
+    {
+      "name": "Security group allows 0.0.0.0/0 on 22",
+      "risk": "high",
+      "state": "fail",
+      "category": "Network Exposure",
+      "resource": "aws_security_group.bastion",
+      "file": "infra/network.tf",
+      "recommendation": "Restrict SSH ingress to a known management CIDR or use SSM."
+    },
+    {
+      "name": "S3 bucket versioning disabled",
+      "risk": "medium",
+      "state": "warn",
+      "category": "Storage",
+      "resource": "aws_s3_bucket.assets",
+      "recommendation": "Enable versioning and lifecycle rules for recoverability."
+    },
+    {
+      "name": "Resource tags missing owner",
+      "risk": "low",
+      "state": "warn",
+      "category": "Governance",
+      "resource": "aws_instance.worker",
+      "recommendation": "Add an owner tag to support cost and ownership tracking."
+    }
+  ]
+}

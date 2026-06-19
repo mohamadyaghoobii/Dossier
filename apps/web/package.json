@@ -1,20 +1,28 @@
 {
+  "name": "dossier-web",
+  "private": true,
+  "version": "0.2.0",
   "scripts": {
     "dev": "next dev -H 0.0.0.0 -p 3000",
     "build": "next build",
     "start": "next start -H 0.0.0.0 -p 3000",
-    "typecheck": "tsc --noEmit"
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "e2e": "playwright test",
+    "e2e:install": "playwright install --with-deps chromium"
   },
   "dependencies": {
-    "@next/swc-linux-x64-gnu": "14.2.23",
     "next": "14.2.23",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
   "devDependencies": {
+    "@playwright/test": "1.49.1",
     "@types/node": "20.17.10",
     "@types/react": "18.3.18",
     "@types/react-dom": "18.3.5",
+    "eslint": "8.57.1",
+    "eslint-config-next": "14.2.23",
     "typescript": "5.7.2"
   }
 }

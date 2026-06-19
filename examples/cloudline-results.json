@@ -1,0 +1,43 @@
+{
+  "project": "Payments Platform",
+  "environment": "production",
+  "module": "Cloudline",
+  "results": [
+    {
+      "title": "Public database endpoint",
+      "severity": "critical",
+      "status": "fail",
+      "category": "Database Exposure",
+      "resource": "rds-prod-payments",
+      "description": "The managed database endpoint is reachable from the public internet.",
+      "impact": "Sensitive data is exposed to internet-based attacks and credential stuffing.",
+      "remediation": "Disable public accessibility and restrict access to private subnets.",
+      "confidence": 0.98
+    },
+    {
+      "title": "IAM user with wildcard admin policy",
+      "severity": "high",
+      "status": "fail",
+      "category": "Identity",
+      "resource": "iam-user/ci-deploy",
+      "description": "An IAM user is attached to a policy granting Action: * on Resource: *.",
+      "impact": "A leaked credential would grant full control of the account.",
+      "remediation": "Replace wildcard permissions with scoped, least-privilege policies."
+    },
+    {
+      "title": "CloudTrail not enabled in all regions",
+      "severity": "medium",
+      "status": "warn",
+      "category": "Logging",
+      "resource": "account/cloudtrail",
+      "remediation": "Enable a multi-region trail with log file validation."
+    },
+    {
+      "title": "MFA enabled for root account",
+      "severity": "info",
+      "status": "pass",
+      "category": "Identity",
+      "resource": "account/root"
+    }
+  ]
+}

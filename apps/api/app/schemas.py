@@ -1,75 +1,177 @@
 from typing import Any, Literal
-from pydantic import BaseModel, Field
+
+from pydantic import BaseModel, ConfigDict, Field
 
 Severity = Literal["critical", "high", "medium", "low", "info"]
-Audience = Literal["executive", "technical", "mixed"]
+Status = Literal["fail", "warn", "pass", "info", "accepted", "mitigated"]
+Audience = Literal["executive", "technical", "security", "mixed", "board"]
+ReportType = Literal["executive", "technical", "remediation", "compliance", "board_summary"]
 ReportFormat = Literal["markdown", "html", "both"]
+GroupBy = Literal["severity", "module", "category", "asset"]
+
+SEVERITY_ORDER: list[Severity] = ["critical", "high", "medium", "low", "info"]
 
 
-class Finding(BaseModel):
+class RawFinding(BaseModel):
+    model_config = ConfigDict(extra="allow")
+
+
+class NormalizedFinding(BaseModel):
+    id: str
     title: str
     severity: Severity = "info"
+    status: Status = "fail"
     category: str = "General"
-    source: str = "unknown"
-    target: str = "unknown"
+    module: str = "unknown"
+    tool: str = "unknown"
+    project: str | None = None
+    asset: str = "unspecified"
+    file_path: str | None = None
+    line: int | None = None
     description: str = ""
     impact: str = ""
     remediation: str = ""
-    status: str = "open"
     evidence: str | None = None
     references: list[str] = Field(default_factory=list)
+    confidence: float = 1.0
+    created_at: str | None = None
+    tags: list[str] = Field(default_factory=list)
+    priority_score: float = 0.0
+    priority_reasons: list[str] = Field(default_factory=list)
+    quick_win: bool = False
     metadata: dict[str, Any] = Field(default_factory=dict)
 
 
+class ReportOptions(BaseModel):
+    include_evidence: bool = True
+    include_passed: bool = False
+    include_references: bool = True
+    include_remediation: bool = True
+    include_appendix: bool = True
+    sort_by_severity: bool = True
+    group_by: GroupBy = "severity"
+
+
 class ReportRequest(BaseModel):
-    title: str = "Security Review Report"
+    report_type: ReportType = "technical"
+    title: str | None = None
     project: str = "Unnamed project"
+    organization: str = "Internal"
     environment: str = "unspecified"
-    audience: Audience = "mixed"
+    audience: Audience | None = None
     output_format: ReportFormat = "both"
-    findings: list[Finding] = Field(default_factory=list)
-    include_remediation_plan: bool = True
-    include_executive_summary: bool = True
-    include_technical_details: bool = True
+    findings: list[dict[str, Any]] = Field(default_factory=list)
+    options: ReportOptions = Field(default_factory=ReportOptions)
     notes: str | None = None
 
 
+class NormalizeRequest(BaseModel):
+    findings: list[dict[str, Any]] = Field(default_factory=list)
+    project: str | None = None
+
+
+class NormalizeResponse(BaseModel):
+    count: int
+    findings: list[NormalizedFinding]
+    dropped: int = 0
+
+
+class ScoreBreakdown(BaseModel):
+    severity: Severity
+    count: int
+    deduction: float
+
+
+class Score(BaseModel):
+    value: int
+    grade: str
+    posture: str
+    explanation: str
+    breakdown: list[ScoreBreakdown]
+
+
+class RiskItem(BaseModel):
+    title: str
+    severity: Severity
+    module: str
+    asset: str
+    priority_score: float
+    reason: str
+
+
+class Aggregation(BaseModel):
+    total_findings: int
+    actionable_findings: int
+    severity_counts: dict[str, int]
+    status_counts: dict[str, int]
+    module_counts: dict[str, int]
+    category_counts: dict[str, int]
+    affected_assets: int
+    highest_severity: str
+    top_risks: list[RiskItem]
+    quick_wins: list[RiskItem]
+    recommended_next_steps: list[str]
+
+
 class Section(BaseModel):
+    id: str
     title: str
     body: str
 
 
-class ReportSummary(BaseModel):
-    score: int
-    grade: str
-    total_findings: int
-    severity_counts: dict[str, int]
-    category_counts: dict[str, int]
-    source_counts: dict[str, int]
-    highest_severity: str
-    recommended_focus: list[str]
+class ReportMetadata(BaseModel):
+    report_type: ReportType
+    title: str
+    project: str
+    organization: str
+    environment: str
+    audience: Audience
+    generated_at: str
+    generator: str = "Dossier"
+    version: str
 
 
 class ReportResponse(BaseModel):
-    title: str
-    project: str
-    environment: str
-    summary: ReportSummary
+    metadata: ReportMetadata
+    score: Score
+    aggregation: Aggregation
+    normalized_findings: list[NormalizedFinding]
     sections: list[Section]
     markdown: str | None = None
     html: str | None = None
 
 
-class TemplateInfo(BaseModel):
+class TemplateField(BaseModel):
     id: str
     name: str
+    report_type: ReportType
     audience: Audience
     description: str
+    output_style: str
     sections: list[str]
+    min_severity: Severity
+    includes_passed: bool
 
 
 class ExampleInfo(BaseModel):
     id: str
     name: str
     description: str
+    module: str
     content: dict[str, Any]
+
+
+class AIRequest(BaseModel):
+    report_type: ReportType = "executive"
+    project: str = "Unnamed project"
+    organization: str = "Internal"
+    findings: list[dict[str, Any]] = Field(default_factory=list)
+    instructions: str | None = None
+
+
+class AIResponse(BaseModel):
+    provider: str
+    model: str | None = None
+    generated: bool
+    content: str
+    note: str | None = None

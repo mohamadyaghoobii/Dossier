@@ -5,43 +5,31 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[4]
 EXAMPLE_DIR = ROOT / "examples"
 
-EXAMPLES = {
-    "findings-sample": "Mixed analyzer findings with critical, high, medium, and low risk.",
-    "mixed-results": "Compact OpsDeck-style result bundle from multiple modules.",
-    "executive-summary-input": "Small production-focused executive report input.",
-    "empty-findings": "Clean project sample with no findings."
-}
+EXAMPLES = [
+    ("mixed-results", "Mixed Results", "OpsDeck", "Multi-module bundle spanning seven analyzers."),
+    ("findings-sample", "Findings Sample", "OpsDeck", "Representative findings across critical to low risk."),
+    ("executive-summary-input", "Executive Input", "OpsDeck", "Production-focused input for an executive brief."),
+    ("technical-report-input", "Technical Input", "OpsDeck", "Detailed input for a full technical report."),
+    ("remediation-plan-input", "Remediation Input", "OpsDeck", "Backlog-style input for a remediation plan."),
+    ("podscope-results", "Podscope", "Podscope", "Kubernetes manifest review findings."),
+    ("dockyard-results", "Dockyard", "Dockyard", "Dockerfile and container build findings."),
+    ("gatehouse-results", "Gatehouse", "Gatehouse", "CI/CD pipeline review findings."),
+    ("stacklint-results", "Stacklint", "Stacklint", "Infrastructure-as-Code review findings."),
+    ("tracepack-results", "Tracepack", "Tracepack", "Secrets, SBOM, and dependency findings."),
+    ("signalbook-results", "Signalbook", "Signalbook", "Observability and incident readiness findings."),
+    ("cloudline-results", "Cloudline", "Cloudline", "Cloud posture review findings."),
+    ("empty-findings", "Empty Findings", "OpsDeck", "Clean project with no findings."),
+]
 
 
 def load_examples() -> list[dict[str, Any]]:
     results = []
-    for item_id, description in EXAMPLES.items():
+    for item_id, name, module, description in EXAMPLES:
         path = EXAMPLE_DIR / f"{item_id}.json"
+        if not path.exists():
+            continue
         content = json.loads(path.read_text(encoding="utf-8"))
-        results.append({"id": item_id, "name": item_id.replace("-", " ").title(), "description": description, "content": content})
+        results.append(
+            {"id": item_id, "name": name, "module": module, "description": description, "content": content}
+        )
     return results
-
-
-TEMPLATES = [
-    {
-        "id": "executive-risk-brief",
-        "name": "Executive Risk Brief",
-        "audience": "executive",
-        "description": "Short leadership-focused summary with score, top risks, and business impact.",
-        "sections": ["Executive Summary", "Risk Snapshot", "Top Priorities", "Next Steps"]
-    },
-    {
-        "id": "technical-remediation-plan",
-        "name": "Technical Remediation Plan",
-        "audience": "technical",
-        "description": "Detailed remediation report grouped by severity, category, source, and target.",
-        "sections": ["Technical Summary", "Finding Details", "Remediation Roadmap", "Appendix"]
-    },
-    {
-        "id": "stakeholder-pack",
-        "name": "Stakeholder Pack",
-        "audience": "mixed",
-        "description": "Balanced report for engineering, security, and management review.",
-        "sections": ["Executive Summary", "Technical Details", "Roadmap", "Ownership"]
-    }
-]

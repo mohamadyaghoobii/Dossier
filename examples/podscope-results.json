@@ -1,0 +1,47 @@
+{
+  "project": "Payments Platform",
+  "environment": "production",
+  "module": "Podscope",
+  "findings": [
+    {
+      "check": "Container runs as root",
+      "severity": "high",
+      "status": "fail",
+      "category": "Workload Hardening",
+      "resource": "Deployment/payments-api",
+      "file": "k8s/payments-api.yaml",
+      "line": 34,
+      "description": "The pod template does not set runAsNonRoot or a numeric runAsUser.",
+      "impact": "A compromised container has root inside the pod and a wider blast radius.",
+      "remediation": "Set securityContext.runAsNonRoot: true and define a non-zero runAsUser.",
+      "references": ["https://kubernetes.io/docs/tasks/configure-pod-container/security-context/"],
+      "confidence": "high"
+    },
+    {
+      "check": "Missing resource limits",
+      "severity": "medium",
+      "status": "warn",
+      "category": "Reliability",
+      "resource": "Deployment/payments-worker",
+      "description": "No CPU or memory limits are defined for the container.",
+      "impact": "A noisy workload can starve neighbours and trigger node pressure evictions.",
+      "remediation": "Define resources.limits and resources.requests for each container."
+    },
+    {
+      "check": "Readiness probe missing",
+      "severity": "low",
+      "status": "warn",
+      "category": "Reliability",
+      "resource": "Deployment/payments-api",
+      "remediation": "Add a readinessProbe that checks a lightweight health endpoint."
+    },
+    {
+      "check": "Image pinned by tag, not digest",
+      "severity": "info",
+      "status": "info",
+      "category": "Supply Chain",
+      "resource": "Deployment/payments-api",
+      "remediation": "Pin images by digest to guarantee immutable deployments."
+    }
+  ]
+}
