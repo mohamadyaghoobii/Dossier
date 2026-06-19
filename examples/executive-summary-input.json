@@ -1,0 +1,8 @@
+{
+  "project": "Board review sample",
+  "environment": "production",
+  "findings": [
+    {"title":"Public database endpoint","severity":"critical","category":"Database Exposure","source":"Cloudline","target":"rds-prod-main","description":"The database endpoint is publicly reachable.","impact":"Sensitive data can be exposed to internet-based attacks.","remediation":"Disable public access and restrict connectivity to private networks.","status":"open"},
+    {"title":"No deployment approval gate","severity":"high","category":"Deployment Safety","source":"Gatehouse","target":"deploy-prod","description":"Production deployments do not require manual approval.","impact":"Risky changes can reach production without human review.","remediation":"Require protected environments and approval gates.","status":"open"}
+  ]
+}

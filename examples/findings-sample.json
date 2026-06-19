@@ -1,0 +1,51 @@
+{
+  "project": "MetaSec DevSecOps Suite",
+  "environment": "production",
+  "generated_by": "mixed analyzers",
+  "findings": [
+    {
+      "title": "Public administrative port exposed",
+      "severity": "critical",
+      "category": "Network Exposure",
+      "source": "Cloudline",
+      "target": "aws_security_group.web_admin",
+      "description": "SSH is open to the internet on a production-facing security group.",
+      "impact": "Attackers can attempt brute-force, credential stuffing, or exploit management-plane services.",
+      "remediation": "Restrict administrative access to a VPN, bastion host, or approved office ranges.",
+      "status": "open"
+    },
+    {
+      "title": "Pipeline token has broad write permissions",
+      "severity": "high",
+      "category": "Permissions",
+      "source": "Gatehouse",
+      "target": ".github/workflows/deploy.yml",
+      "description": "The workflow grants write permissions broadly instead of defining least-privilege permissions per job.",
+      "impact": "A compromised workflow step can modify code, releases, or deployment artifacts.",
+      "remediation": "Set permissions at workflow and job level and grant only the scopes required by each job.",
+      "status": "open"
+    },
+    {
+      "title": "Container runs without a non-root user",
+      "severity": "medium",
+      "category": "User & Privileges",
+      "source": "Dockyard",
+      "target": "Dockerfile",
+      "description": "The Dockerfile does not define a non-root runtime user.",
+      "impact": "If the container is compromised, the attacker may gain elevated privileges inside the container.",
+      "remediation": "Create a dedicated user and switch to it before runtime commands.",
+      "status": "open"
+    },
+    {
+      "title": "Missing readiness probe",
+      "severity": "low",
+      "category": "Reliability",
+      "source": "Podscope",
+      "target": "Deployment/api",
+      "description": "The workload has no readiness probe.",
+      "impact": "Traffic can be routed to pods before they are ready to serve requests.",
+      "remediation": "Add a readinessProbe that checks a lightweight application health endpoint.",
+      "status": "open"
+    }
+  ]
+}

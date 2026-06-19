@@ -1,0 +1,9 @@
+{
+  "project": "OpsDeck integration demo",
+  "environment": "staging",
+  "findings": [
+    {"title":"Hardcoded token-like value","severity":"high","category":"Secrets","source":"Tracepack","target":".env","description":"A token-like value appears in an environment file.","impact":"Secrets in source files can be leaked through commits, artifacts, or logs.","remediation":"Move secrets to a secret manager and rotate exposed values.","status":"open"},
+    {"title":"Terraform S3 bucket missing versioning","severity":"medium","category":"Storage","source":"Stacklint","target":"aws_s3_bucket.assets","description":"The bucket does not define versioning.","impact":"Accidental deletion or overwrite events are harder to recover from.","remediation":"Enable bucket versioning and lifecycle rules.","status":"open"},
+    {"title":"Missing incident owner","severity":"info","category":"Operational Readiness","source":"Signalbook","target":"service-profile.yaml","description":"The service profile does not define an incident owner.","impact":"Incident coordination can be delayed during outages.","remediation":"Assign a primary team owner and escalation path.","status":"open"}
+  ]
+}
